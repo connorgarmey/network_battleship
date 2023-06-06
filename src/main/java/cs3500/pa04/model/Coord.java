@@ -1,5 +1,7 @@
 package cs3500.pa04.model;
 
+import cs3500.pa04.control.json.CoordJson;
+
 /**
  * Coordinate class
  */
@@ -16,6 +18,16 @@ public class Coord {
   public Coord(int x, int y) {
     this.width = x;
     this.height = y;
+  }
+
+  /**
+   * Constructor to convert a JSON coordinate
+   *
+   * @param coordJson the JSON representation
+   */
+  public Coord(CoordJson coordJson) {
+    this.width = coordJson.x();
+    this.height = coordJson.y();
   }
 
   /**
@@ -61,6 +73,11 @@ public class Coord {
    */
   public String printCoord() {
     return "(" + width + ", " + height + ")";
+  }
+
+
+  public CoordJson makeCoordJson() {
+    return new CoordJson(width, height);
   }
 
 

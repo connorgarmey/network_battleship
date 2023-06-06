@@ -1,5 +1,13 @@
 package cs3500.pa04.model;
 
+import static cs3500.pa04.model.Direction.HORIZONTAL;
+import static cs3500.pa04.model.Direction.VERTICAL;
+import static cs3500.pa04.model.ShipType.BATTLESHIP;
+import static cs3500.pa04.model.ShipType.CARRIER;
+import static cs3500.pa04.model.ShipType.DESTROYER;
+import static cs3500.pa04.model.ShipType.SUBMARINE;
+
+import cs3500.pa04.control.json.ShipJson;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +19,56 @@ public class Ship {
   private final ShipType shipType;
   private final List<Coord> location;
   private final List<Coord> hit;
+  private final Direction direction;
 
-  Ship(ShipType type, int height, int width, boolean direction) {
+  /**
+   * Constructor for a ship
+   *
+   * @param type ShipType
+   * @param height Board height
+   * @param width Board width
+   * @param dir Ship Direction
+   */
+  Ship(ShipType type, int height, int width, boolean dir) {
     this.shipType = type;
     this.location = new ArrayList<>();
     this.hit = new ArrayList<>();
+    if (dir) {
+      this.direction = HORIZONTAL;
+    } else {
+      this.direction = VERTICAL;
+    }
     this.setLocation(width, height, direction);
+  }
+
+  /**
+   * Converts a JSON ship to a Ship object
+   *
+   * @param shipJson the JSON representation
+   */
+  Ship(ShipJson shipJson) {
+    this.location = new ArrayList<>();
+    this.shipType = this.setShipType(shipJson.length());
+    this.direction = shipJson.direction();
+    this.setLocation(shipJson.coordJson().x(),
+        shipJson.coordJson().y(), direction);
+    this.hit = new ArrayList<>();
+  }
+
+  /**
+   * Sets the ShipType
+   *
+   * @param shipLength the length of this ship
+   * @return the type of ship
+   */
+  private ShipType setShipType(int shipLength) {
+    return switch (shipLength) {
+      case 6 -> CARRIER;
+      case 5 -> BATTLESHIP;
+      case 4 -> DESTROYER;
+      case 3 -> SUBMARINE;
+      default -> throw new IllegalArgumentException("Invalid Ship Size");
+    };
   }
 
 
@@ -54,8 +106,8 @@ public class Ship {
    * @param y the y location to start at
    * @param dir the direction of the ship
    */
-  private void setLocation(int x, int y, boolean dir) {
-    if (dir) {
+  private void setLocation(int x, int y, Direction dir) {
+    if (dir == HORIZONTAL) {
       for (int i = x; i < x + shipType.getShipSize(); i++) {
         location.add(new Coord(i, y));
       }
@@ -130,6 +182,12 @@ public class Ship {
     Ship ship = (Ship) o;
     return this.location.equals(ship.location)
         && this.hit.equals(ship.hit);
+  }
+
+
+  public ShipJson makeShipJSON() {
+    return new ShipJson(location.get(0).makeCoordJson(),
+        shipType.getShipSize(), direction);
   }
 }
 

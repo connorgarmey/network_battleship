@@ -5,6 +5,8 @@ import static cs3500.pa04.model.CellType.HIT;
 import static cs3500.pa04.model.CellType.MISS;
 import static cs3500.pa04.model.CellType.SHIP;
 
+import cs3500.pa04.control.json.FleetJson;
+import cs3500.pa04.control.json.ShipJson;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -193,6 +195,15 @@ public class BoardImpl implements BoardInteractions {
   public void setHeightWidth(int height, int width) {
     this.height = height;
     this.width = width;
+  }
+
+
+  public FleetJson getFleetSetup() {
+    List<ShipJson> ships = new ArrayList<>();
+    for (Ship ship : board) {
+      ships.add(ship.makeShipJSON());
+    }
+    return new FleetJson(ships);
   }
 
 }

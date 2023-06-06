@@ -1,4 +1,11 @@
 package cs3500.pa04.control.json;
 
-public record FleetJson() {
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+
+public record FleetJson(
+  @JsonProperty("fleet")
+  List<ShipJson> shipJsonList) {
+
+
 }
