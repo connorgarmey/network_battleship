@@ -31,6 +31,10 @@ public class Driver {
 
     Controller controller = new Controller(p1, p2, view, scan, di);
 
+    if (args.length == 2) {
+      runClient(args[0], Integer.parseInt(args[1]));
+    }
+
     controller.runApp();
 
   }
