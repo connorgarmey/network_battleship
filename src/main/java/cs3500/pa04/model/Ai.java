@@ -20,7 +20,7 @@ public class Ai extends AbstractPlayer {
    *
    * @param board the Board object
    */
-  public Ai(BoardImpl board) {
+  public Ai(BoardInteractions board) {
     super(board);
     this.current = new ArrayList<>();
     this.aiGuessed = new ArrayList<>();
@@ -33,7 +33,7 @@ public class Ai extends AbstractPlayer {
    *
    * @param board the Board object
    */
-  public Ai(BoardImpl board, Random random) {
+  public Ai(BoardInteractions board, Random random) {
     super(board, random);
     this.current = new ArrayList<>();
     this.aiGuessed = new ArrayList<>();

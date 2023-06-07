@@ -10,7 +10,7 @@ import java.util.Random;
  * Abstract class representing a player
  */
 public abstract class AbstractPlayer implements Player {
-  protected BoardImpl board;
+  protected BoardInteractions board;
   protected Random random;
 
 
@@ -20,7 +20,7 @@ public abstract class AbstractPlayer implements Player {
    *
    * @param board the Board object
    */
-  AbstractPlayer(BoardImpl board) {
+  AbstractPlayer(BoardInteractions board) {
     this.board = board;
     this.random = new Random();
   }
@@ -31,7 +31,7 @@ public abstract class AbstractPlayer implements Player {
    * @param board the Board object
    * @param random the random object
    */
-  AbstractPlayer(BoardImpl board, Random random) {
+  AbstractPlayer(BoardInteractions board, Random random) {
     this.board = board;
     this.random = random;
   }

@@ -5,6 +5,7 @@ import cs3500.pa04.control.DependencyInjector;
 import cs3500.pa04.control.ProxyController;
 import cs3500.pa04.model.Ai;
 import cs3500.pa04.model.BoardImpl;
+import cs3500.pa04.model.BoardInteractions;
 import cs3500.pa04.model.Player;
 import cs3500.pa04.model.User;
 import cs3500.pa04.view.View;
