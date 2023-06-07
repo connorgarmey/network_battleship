@@ -63,7 +63,6 @@ public interface Player {
    */
   void endGame(GameResult result, String reason);
 
-  void updateUserBoard(List<Coord> opponentShotsOnBoard);
 }
 
 
