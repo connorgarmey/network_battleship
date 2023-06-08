@@ -33,6 +33,8 @@ public class ProxyController extends AbstractController {
   private final InputStream in;
   private final PrintStream out;
   private final ObjectMapper mapper = new ObjectMapper();
+  private final ServerView view;
+
 
   // TODO: TRY CATCH IOEXCEPTION when constructing a Proxy Controller
   public ProxyController(Player p1, ServerView v, Socket server) throws IOException {
@@ -78,6 +80,12 @@ public class ProxyController extends AbstractController {
         case "end-game" -> handleEnd(arguments);
         default -> throw new IllegalStateException("Bad JSON method name");
       }
+    }
+
+    private void sendResponse(JsonNode node, String methodName) {
+      MessageJson response = new MessageJson(methodName, node);
+      this.out.println(response);
+      view.printLine(response.toString());
     }
 
 

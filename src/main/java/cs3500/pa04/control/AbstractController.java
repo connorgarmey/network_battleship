@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class AbstractController implements Controller {
   protected final Player p1;
-  protected final View view;
+  //protected final View view;
   protected boolean isInputValid;
   int height;
   int width;
@@ -23,8 +23,8 @@ public abstract class AbstractController implements Controller {
    * @param p1 Player one
    * @param v The view object
    */
-  public AbstractController(Player p1, View v) {
-    this.view = v;
+  public AbstractController(Player p1) {
+    //this.view = v;
     this.isInputValid = false;
     this.p1 = p1;
     this.height = 0;

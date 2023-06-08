@@ -23,6 +23,7 @@ public class OfflineController extends AbstractController{
   private final Scanner input;
   private final DependencyInjector di;
   private boolean isInputValid;
+  private final UserView view;
   int height;
   int width;
   HashMap<ShipType, Integer> map;
@@ -39,7 +40,8 @@ public class OfflineController extends AbstractController{
    */
   public OfflineController(Player p1, UserView v,
                            Player p2, Scanner s, DependencyInjector di) {
-    super(p1, v);
+    super(p1);
+    this.view = v;
     this.p2 = p2;
     this.input = s;
     this.di = di;
