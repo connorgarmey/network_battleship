@@ -15,15 +15,4 @@ public interface Controller {
   void runApp();
 
 
-  /**
-   * The game is over if a player has no shots left
-   *
-   * @param list1 p1's remaining shots
-   * @param list2 p2's remaining shots
-   *
-   * @return whether the game is over
-   */
-  boolean gameOver(List<Coord> list1, List<Coord> list2);
-
-
 }

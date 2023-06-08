@@ -198,12 +198,5 @@ public class BoardImpl implements BoardInteractions {
   }
 
 
-  public FleetJson getFleetSetup() {
-    List<ShipJson> ships = new ArrayList<>();
-    for (Ship ship : board) {
-      ships.add(ship.makeShipJSON());
-    }
-    return new FleetJson(ships);
-  }
 
 }

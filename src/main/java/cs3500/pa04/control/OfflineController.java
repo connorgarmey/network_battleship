@@ -1,5 +1,8 @@
 package cs3500.pa04.control;
 
+import static cs3500.pa04.model.GameResult.DRAW;
+import static cs3500.pa04.model.GameResult.LOSE;
+import static cs3500.pa04.model.GameResult.WIN;
 import static cs3500.pa04.model.ShipType.BATTLESHIP;
 import static cs3500.pa04.model.ShipType.CARRIER;
 import static cs3500.pa04.model.ShipType.DESTROYER;
@@ -67,7 +70,7 @@ public class OfflineController extends AbstractController{
     isInputValid = false;
 
 
-    p1.setup(height, width, map);
+    ai.setup(height, width, map);
     p2.setup(height, width, map);
 
     boolean gameNotOver = true;
@@ -76,16 +79,16 @@ public class OfflineController extends AbstractController{
     while (gameNotOver) {
 
       view.displayBoard();
-      List<Coord> shotsFiredFromP1 = p1.takeShots();
+      List<Coord> shotsFiredFromP1 = ai.takeShots();
       di.clear();
       List<Coord> shotsFiredFromP2 = p2.takeShots();
       //di.clear(); //TODO remove
 
-      List<Coord> damageOnP1 = p1.reportDamage(shotsFiredFromP2);
+      List<Coord> damageOnP1 = ai.reportDamage(shotsFiredFromP2);
       List<Coord> damageOnP2 = p2.reportDamage(shotsFiredFromP1);
 
       // Player 1's successful hits
-      p1.successfulHits(damageOnP2);
+      ai.successfulHits(damageOnP2);
       // Player 2's successful hits
       p2.successfulHits(damageOnP1);
 
@@ -211,6 +214,30 @@ public class OfflineController extends AbstractController{
   }
 
 
+  /**
+   * The game is over if a player has no shots left
+   *
+   * @param list1 p1's remaining shots
+   * @param list2 p2's remaining shots
+   *
+   * @return whether the game is over
+   */
+  private boolean gameOver(List<Coord> list1, List<Coord> list2) {
+    if (list1.size() == 0 && list2.size() == 0) {
+      gameResult = DRAW;
+      return true;
+    }
+    if (list1.size() == 0) {
+      gameResult = LOSE;
+      return true;
+    }
+    if (list2.size() == 0) {
+      gameResult = WIN;
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 }
 

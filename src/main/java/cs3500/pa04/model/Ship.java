@@ -41,36 +41,6 @@ public class Ship {
     this.setLocation(width, height, direction);
   }
 
-  /**
-   * Converts a JSON ship to a Ship object
-   *
-   * @param shipJson the JSON representation
-   */
-  Ship(ShipJson shipJson) {
-    this.location = new ArrayList<>();
-    this.shipType = this.setShipType(shipJson.length());
-    this.direction = shipJson.direction();
-    this.setLocation(shipJson.coordJson().x(),
-        shipJson.coordJson().y(), direction);
-    this.hit = new ArrayList<>();
-  }
-
-  /**
-   * Sets the ShipType
-   *
-   * @param shipLength the length of this ship
-   * @return the type of ship
-   */
-  private ShipType setShipType(int shipLength) {
-    return switch (shipLength) {
-      case 6 -> CARRIER;
-      case 5 -> BATTLESHIP;
-      case 4 -> DESTROYER;
-      case 3 -> SUBMARINE;
-      default -> throw new IllegalArgumentException("Invalid Ship Size");
-    };
-  }
-
 
   /**
    * Determines if every part of a ship is hit
@@ -180,8 +150,7 @@ public class Ship {
       return false;
     }
     Ship ship = (Ship) o;
-    return this.location.equals(ship.location)
-        && this.hit.equals(ship.hit);
+    return this.location.equals(ship.location);
   }
 
 

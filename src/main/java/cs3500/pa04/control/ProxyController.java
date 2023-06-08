@@ -29,16 +29,23 @@ import java.util.List;
  * Controller for the Online Battleship
  */
 public class ProxyController extends AbstractController {
-  private Socket server;
+  private final Socket server;
   private final InputStream in;
   private final PrintStream out;
   private final ObjectMapper mapper = new ObjectMapper();
   private final ServerView view;
 
 
-  // TODO: TRY CATCH IOEXCEPTION when constructing a Proxy Controller
-  public ProxyController(Player p1, ServerView v, Socket server) throws IOException {
-    super(p1);
+  /**
+   * Constructor for a proxy controller
+   *
+   * @param ai the AI player
+   * @param v the
+   * @param server
+   * @throws IOException
+   */
+  public ProxyController(Player ai, ServerView v, Socket server) throws IOException {
+    super(ai);
     this.view = v;
     this.server = server;
     this.in = server.getInputStream();
@@ -113,7 +120,7 @@ public class ProxyController extends AbstractController {
     List<ShipJson> shipJsons = new ArrayList<>();
 
     List<Ship> ships =
-        p1.setup(setupParams.height(), setupParams.width(), setupParams.fleet().makeMap());
+        ai.setup(setupParams.height(), setupParams.width(), setupParams.fleet().makeMap());
 
     for (Ship s : ships) {
       shipJsons.add(s.makeShipJSON());
@@ -126,7 +133,7 @@ public class ProxyController extends AbstractController {
 
 
   private void handleShots(JsonNode args) {
-    List<Coord> shots = p1.takeShots();
+    List<Coord> shots = ai.takeShots();
     List<CoordJson> shotsJson = makeCoordJson(shots);
 
     VolleyJson response = new VolleyJson(shotsJson);
@@ -137,7 +144,7 @@ public class ProxyController extends AbstractController {
 
   private void handleDamage(JsonNode args) {
     VolleyJson volleyJson = this.mapper.convertValue(args, VolleyJson.class);
-    List<Coord> hits = p1.reportDamage(volleyJson.convertToCoords());
+    List<Coord> hits = ai.reportDamage(volleyJson.convertToCoords());
     List<CoordJson> hitsJson = makeCoordJson(hits);
 
     VolleyJson response = new VolleyJson(hitsJson);
@@ -148,7 +155,7 @@ public class ProxyController extends AbstractController {
 
   private void handleHits(JsonNode args) {
     VolleyJson volleyJson = this.mapper.convertValue(args, VolleyJson.class);
-    p1.successfulHits(volleyJson.convertToCoords());
+    ai.successfulHits(volleyJson.convertToCoords());
 
     JsonNode node = mapper.createObjectNode();
     sendResponse(node, "successful-hits");
@@ -157,7 +164,7 @@ public class ProxyController extends AbstractController {
 
   private void handleEnd(JsonNode args) {
     EndGameJson endJson = this.mapper.convertValue(args, EndGameJson.class);
-    p1.endGame(endJson.gameResult(), endJson.reason());
+    ai.endGame(endJson.gameResult(), endJson.reason());
     JsonNode node = mapper.createObjectNode();
     sendResponse(node, "end-game");
 
@@ -176,15 +183,6 @@ public class ProxyController extends AbstractController {
       coordJsons.add(c.makeCoordJson());
     }
     return coordJsons;
-  }
-
-
-  private VolleyJson makeVolleyJson(List<Coord> volley) {
-    List<CoordJson> coordJsons = new ArrayList<>();
-    for (Coord c : volley) {
-      coordJsons.add(c.makeCoordJson());
-    }
-    return new VolleyJson(coordJsons);
   }
 
 }

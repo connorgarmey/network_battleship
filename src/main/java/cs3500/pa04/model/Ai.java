@@ -38,6 +38,7 @@ public class Ai extends AbstractPlayer {
     this.current = new ArrayList<>();
     this.aiGuessed = new ArrayList<>();
     this.count = 0;
+    this.random = random;
   }
 
 

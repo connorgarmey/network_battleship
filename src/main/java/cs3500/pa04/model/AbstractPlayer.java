@@ -26,15 +26,15 @@ public abstract class AbstractPlayer implements Player {
   }
 
   /**
-   * Constructor for random seeded testing
+   * Constructor with a seeded random
    *
    * @param board the Board object
-   * @param random the random object
    */
   AbstractPlayer(BoardInteractions board, Random random) {
     this.board = board;
     this.random = random;
   }
+
 
 
   /**
