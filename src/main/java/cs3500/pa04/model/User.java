@@ -16,7 +16,7 @@ public class User extends AbstractPlayer {
    * @param board the Board object
    * @param di the Dependency Injector object
    */
-  public User(BoardImpl board, DependencyInjector di) {
+  public User(BoardInteractions board, DependencyInjector di) {
     super(board);
     this.di = di;
   }

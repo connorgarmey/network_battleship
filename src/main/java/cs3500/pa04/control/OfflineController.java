@@ -1,8 +1,5 @@
 package cs3500.pa04.control;
 
-import static cs3500.pa04.model.GameResult.DRAW;
-import static cs3500.pa04.model.GameResult.LOSE;
-import static cs3500.pa04.model.GameResult.WIN;
 import static cs3500.pa04.model.ShipType.BATTLESHIP;
 import static cs3500.pa04.model.ShipType.CARRIER;
 import static cs3500.pa04.model.ShipType.DESTROYER;
@@ -12,7 +9,7 @@ import cs3500.pa04.model.Coord;
 import cs3500.pa04.model.GameResult;
 import cs3500.pa04.model.Player;
 import cs3500.pa04.model.ShipType;
-import cs3500.pa04.view.View;
+import cs3500.pa04.view.UserView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -40,7 +37,7 @@ public class OfflineController extends AbstractController{
    * @param s The Scanner object
    * @param di The Dependency Injector object
    */
-  public OfflineController(Player p1, View v,
+  public OfflineController(Player p1, UserView v,
                            Player p2, Scanner s, DependencyInjector di) {
     super(p1, v);
     this.p2 = p2;

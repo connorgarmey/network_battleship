@@ -8,7 +8,8 @@ import cs3500.pa04.model.BoardImpl;
 import cs3500.pa04.model.BoardInteractions;
 import cs3500.pa04.model.Player;
 import cs3500.pa04.model.User;
-import cs3500.pa04.view.View;
+import cs3500.pa04.view.ServerView;
+import cs3500.pa04.view.UserView;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Scanner;
@@ -21,30 +22,40 @@ public class Driver {
   /**
    * Project entry point
    *
-   * @param args - no command line args required
+   * @param args - host and port or nothing for offline game mode
    */
   public static void main(String[] args) {
-    BoardInteractions board = new BoardImpl();
-    Player p1 = new Ai(board);
-    View view = new View(System.out, board);
+
+    BoardInteractions aiBoard = new BoardImpl();
+    Player p2 = new Ai(aiBoard);
 
     if (args.length == 2) {
-      runClient(args, p2);
+      ServerView serverView = new ServerView(System.out);
+      runClient(args, p2, serverView);
+    } else {
+
+      Scanner scan = new Scanner(new InputStreamReader(System.in));
+      BoardInteractions userBoard = new BoardImpl();
+      UserView userView = new UserView(System.out, userBoard);
+      DependencyInjector di = new DependencyInjector(scan, userView);
+      Player p1 = new User(userBoard, di);
+
+      OfflineController controller = new OfflineController(p1, userView, p2, scan, di);
+      controller.runApp();
     }
-
-    BoardImpl board1 = new BoardImpl();
-    View view = new View(System.out, board1);
-    Scanner scan = new Scanner(new InputStreamReader(System.in));
-    DependencyInjector di = new DependencyInjector(scan, view);
-    Player p1 = new User(board1, di);
-
-    OfflineController controller = new OfflineController(p1, p2, view, scan, di);
-
-    controller.runApp();
   }
 
 
-  private static void runClient(String[] args, Player ai ) {
+
+  /**
+   * Parses the command line arguments to retrieve a host and port for the
+   * server and creates a new proxy controller for the online game
+   *
+   * @param args the host and port
+   * @param ai the AI player object
+   * @param serverView the view of JSON interactions
+   */
+  private static void runClient(String[] args, Player ai, ServerView serverView) {
     String host;
     int port;
 
@@ -52,8 +63,7 @@ public class Driver {
       host = args[0];
       port = Integer.parseInt(args[1]);
       Socket server = new Socket(host, port);
-
-      ProxyController proxyController = new ProxyController(server, ai);
+      ProxyController proxyController = new ProxyController(ai, serverView, server);
     } catch (Exception e) {
       System.out.println("Invalid args");
     }

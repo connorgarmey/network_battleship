@@ -2,16 +2,9 @@ package cs3500.pa04.control;
 
 import static cs3500.pa04.control.GameType.SINGLE;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonPointer;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
-import com.fasterxml.jackson.databind.node.JsonNodeType;
 import cs3500.pa04.control.json.CoordJson;
 import cs3500.pa04.control.json.EndGameJson;
 import cs3500.pa04.control.json.FleetJson;
@@ -24,7 +17,7 @@ import cs3500.pa04.control.json.VolleyJson;
 import cs3500.pa04.model.Coord;
 import cs3500.pa04.model.Player;
 import cs3500.pa04.model.Ship;
-import cs3500.pa04.view.View;
+import cs3500.pa04.view.ServerView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -42,11 +35,13 @@ public class ProxyController extends AbstractController {
   private final ObjectMapper mapper = new ObjectMapper();
 
   // TODO: TRY CATCH IOEXCEPTION when constructing a Proxy Controller
-  public ProxyController(Player p1, View v, Socket server) throws IOException {
-    super(p1,v);
+  public ProxyController(Player p1, ServerView v, Socket server) throws IOException {
+    super(p1);
+    this.view = v;
     this.server = server;
     this.in = server.getInputStream();
     this.out = new PrintStream(server.getOutputStream());
+    this.runApp();
   }
 
 
@@ -59,7 +54,8 @@ public class ProxyController extends AbstractController {
         delegateMessage(message);
       }
     } catch (IOException e) {
-      // Disconnected from server or parsing exception
+      System.out.println(e.getMessage());
+      System.out.println("Error parsing message");
     }
   }
 
@@ -67,7 +63,7 @@ public class ProxyController extends AbstractController {
   /**
    * Delegates out the servers messages based on the name in the message
    *
-   * @param message
+   * @param message the message received from the server
    */
     private void delegateMessage(MessageJson message) {
       String methodName = message.methodName();
@@ -92,9 +88,10 @@ public class ProxyController extends AbstractController {
    * @param args the Server prompt
    */
   private void handleJoin(JsonNode args) {
-      JoinJson joinJson = new JoinJson("connorgarmey", SINGLE);
-      this.out.println(joinJson);
-    }
+    JoinJson joinJson = new JoinJson("connorgarmey", SINGLE);
+    JsonNode node = JsonUtils.serializeRecord(joinJson);
+    sendResponse(node, "join");
+  }
 
 
   /**
@@ -108,15 +105,15 @@ public class ProxyController extends AbstractController {
     List<ShipJson> shipJsons = new ArrayList<>();
 
     List<Ship> ships =
-        p1.setup(setupParams.width(), setupParams.height(), setupParams.fleet().makeMap());
+        p1.setup(setupParams.height(), setupParams.width(), setupParams.fleet().makeMap());
 
     for (Ship s : ships) {
       shipJsons.add(s.makeShipJSON());
     }
 
     FleetJson response = new FleetJson(shipJsons);
-    JsonNode jsonResponse = JsonUtils.serializeRecord(response);
-    this.out.println(jsonResponse);
+    JsonNode node = JsonUtils.serializeRecord(response);
+    sendResponse(node, "setup");
   }
 
 
@@ -125,8 +122,8 @@ public class ProxyController extends AbstractController {
     List<CoordJson> shotsJson = makeCoordJson(shots);
 
     VolleyJson response = new VolleyJson(shotsJson);
-    JsonNode jsonResponse = JsonUtils.serializeRecord(response);
-    this.out.println(jsonResponse);
+    JsonNode node = JsonUtils.serializeRecord(response);
+    sendResponse(node, "take-shots");
   }
 
 
@@ -136,8 +133,8 @@ public class ProxyController extends AbstractController {
     List<CoordJson> hitsJson = makeCoordJson(hits);
 
     VolleyJson response = new VolleyJson(hitsJson);
-    JsonNode jsonResponse = JsonUtils.serializeRecord(response);
-    this.out.println(jsonResponse);
+    JsonNode node = JsonUtils.serializeRecord(response);
+    sendResponse(node, "report-damage");
   }
 
 
@@ -145,19 +142,23 @@ public class ProxyController extends AbstractController {
     VolleyJson volleyJson = this.mapper.convertValue(args, VolleyJson.class);
     p1.successfulHits(volleyJson.convertToCoords());
 
-    JsonNode jsonResponse = mapper.createObjectNode();
-    this.out.println(jsonResponse);
+    JsonNode node = mapper.createObjectNode();
+    sendResponse(node, "successful-hits");
   }
 
 
   private void handleEnd(JsonNode args) {
     EndGameJson endJson = this.mapper.convertValue(args, EndGameJson.class);
     p1.endGame(endJson.gameResult(), endJson.reason());
-    JsonNode jsonResponse = mapper.createObjectNode();
-    this.out.println(jsonResponse);
+    JsonNode node = mapper.createObjectNode();
+    sendResponse(node, "end-game");
+
+    try {
+      this.server.close();
+    } catch (Exception e) {
+      System.out.println("Error closing server");
+    }
   }
-
-
 
 
 

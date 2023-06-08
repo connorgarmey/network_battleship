@@ -18,6 +18,13 @@ import com.fasterxml.jackson.databind.JsonNode;
    * @param arguments   the arguments passed along with the message formatted as a Json object
    */
   public record MessageJson(
-      @JsonProperty("name") String methodName,
-      @JsonProperty("arguments") JsonNode arguments) {
+      @JsonProperty("method-name")
+      String methodName,
+      @JsonProperty("arguments")
+      JsonNode arguments) {
+
+    @Override
+    public String toString(){
+      return JsonUtils.serializeRecord(this).toString();
+    }
   }

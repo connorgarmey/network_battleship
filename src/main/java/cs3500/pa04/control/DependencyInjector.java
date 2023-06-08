@@ -1,7 +1,7 @@
 package cs3500.pa04.control;
 
 import cs3500.pa04.model.Coord;
-import cs3500.pa04.view.View;
+import cs3500.pa04.view.UserView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +13,7 @@ public class DependencyInjector {
   private List<Coord> current;
   private List<Coord> guessed;
   private Scanner input;
-  private View view;
+  private UserView view;
 
 
   /**
@@ -22,7 +22,7 @@ public class DependencyInjector {
    * @param scanner the Scanner object
    * @param view the View object
    */
-  public DependencyInjector(Scanner scanner, View view) {
+  public DependencyInjector(Scanner scanner, UserView view) {
     this.input = scanner;
     this.view = view;
     this.current = new ArrayList<>();

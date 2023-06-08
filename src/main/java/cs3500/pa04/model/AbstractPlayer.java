@@ -104,7 +104,6 @@ public abstract class AbstractPlayer implements Player {
           damage.add(c);
         }
         if (s.isSunk()) {
-          System.out.println("WHY WE REMOVING");
           board.removeShip(s);
         }
       }

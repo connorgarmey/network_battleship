@@ -2,7 +2,7 @@ package cs3500.pa04.model;
 
 import java.util.List;
 
-public interface BoardInteractions extends Board {
+public interface BoardInteractions extends BoardObserver {
 
   /**
    * Sets up the boards
