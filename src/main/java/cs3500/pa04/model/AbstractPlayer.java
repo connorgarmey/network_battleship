@@ -12,6 +12,8 @@ import java.util.Random;
 public abstract class AbstractPlayer implements Player {
   protected BoardInteractions board;
   protected Random random;
+  protected List<Coord> hits;
+  protected List<Coord> allGuesses;
 
 
 
@@ -23,6 +25,9 @@ public abstract class AbstractPlayer implements Player {
   AbstractPlayer(BoardInteractions board) {
     this.board = board;
     this.random = new Random();
+    this.hits = new ArrayList<>();
+    this.allGuesses = new ArrayList<>();
+
   }
 
   /**
@@ -33,6 +38,8 @@ public abstract class AbstractPlayer implements Player {
   AbstractPlayer(BoardInteractions board, Random random) {
     this.board = board;
     this.random = random;
+    this.hits = new ArrayList<>();
+    this.allGuesses = new ArrayList<>();
   }
 
   private List<Coord> makeAllGuesses() {
@@ -131,6 +138,7 @@ public abstract class AbstractPlayer implements Player {
    */
   @Override
   public void successfulHits(List<Coord> shotsThatHitOpponentShips) {
+    hits.addAll(shotsThatHitOpponentShips);
     board.updateOpponentBoard(shotsThatHitOpponentShips);
   }
 

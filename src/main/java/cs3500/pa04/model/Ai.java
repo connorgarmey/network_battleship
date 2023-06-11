@@ -14,6 +14,7 @@ public class Ai extends AbstractPlayer {
 
 
 
+
   /**
    * AI constructor
    *
@@ -39,6 +40,7 @@ public class Ai extends AbstractPlayer {
   }
 
 
+
   /**
    * Method for taking shots
    *
@@ -61,4 +63,12 @@ public class Ai extends AbstractPlayer {
     }
   }*/ // TODO: update for smarter ai for tournament
 
+  private void noHits(int size) {
+    for (int i = 0; i < size; i++) {
+      int listSize = allGuesses.size();
+      int guess = random.nextInt(listSize);
+      Coord theGuess = allGuesses.remove(guess);
+      current.add(theGuess);
+    }
+  }
 }
