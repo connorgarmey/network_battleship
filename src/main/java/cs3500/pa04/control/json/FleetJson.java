@@ -1,13 +1,16 @@
 package cs3500.pa04.control.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import cs3500.pa04.model.ShipType;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * JSON for a fleet of ships
+ *
+ * @param shipJsonList the list of ship JSON
+ */
 public record FleetJson(
-  @JsonProperty("fleet")
-  List<ShipJson> shipJsonList) {
+    @JsonProperty("fleet")
+    List<ShipJson> shipJsonList) {
 
 
 

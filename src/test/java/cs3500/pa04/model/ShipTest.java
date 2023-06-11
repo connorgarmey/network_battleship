@@ -12,14 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import cs3500.pa04.control.DependencyInjector;
 import cs3500.pa04.control.json.CoordJson;
 import cs3500.pa04.control.json.ShipJson;
-import cs3500.pa04.model.Ai;
-import cs3500.pa04.model.BoardImpl;
-import cs3500.pa04.model.BoardInteractions;
-import cs3500.pa04.model.Coord;
-import cs3500.pa04.model.Direction;
-import cs3500.pa04.model.Player;
-import cs3500.pa04.model.Ship;
-import cs3500.pa04.model.ShipType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -67,7 +59,7 @@ public class ShipTest {
   
   @Test
   void testMakeShipJson() {
-    assertEquals(sub.makeShipJSON(), shipJson);
+    assertEquals(sub.makeShipJson(), shipJson);
   }
 
   @Test

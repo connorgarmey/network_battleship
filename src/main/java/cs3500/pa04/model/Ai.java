@@ -10,7 +10,6 @@ import java.util.Random;
 public class Ai extends AbstractPlayer {
   private int count;
   private List<Coord> current;
-  private List<Coord> aiGuessed;
   private Random random;
 
 
@@ -23,7 +22,6 @@ public class Ai extends AbstractPlayer {
   public Ai(BoardInteractions board) {
     super(board);
     this.current = new ArrayList<>();
-    this.aiGuessed = new ArrayList<>();
     this.count = 0;
     this.random = new Random();
   }
@@ -36,7 +34,6 @@ public class Ai extends AbstractPlayer {
   public Ai(BoardInteractions board, Random random) {
     super(board, random);
     this.current = new ArrayList<>();
-    this.aiGuessed = new ArrayList<>();
     this.count = 0;
     this.random = random;
   }
@@ -50,47 +47,18 @@ public class Ai extends AbstractPlayer {
   @Override
   public List<Coord> takeShots() {
     count = board.getBoard().size();
-    aiShots(board.getBoardHeight(), board.getBoardWidth());
+    noHits(count);
     List<Coord> round = new ArrayList<>(current);
     current = new ArrayList<>();
     return round;
   }
 
-  /**
-   * Updates the AI player's board
-   *
-   * @param opponentShotsOnBoard the user's shots
-   */
-  public void updateUserBoard(List<Coord> opponentShotsOnBoard) {
-    board.updateUserBoard(opponentShotsOnBoard);
-  }
+  /*public void newAiShots() {
+    if (hits.size() == 0) {
+      noHits(count);
+    } else {
 
-
-  //TODO: Fix
-  /**
-   * Generates random shots that the AI player will take
-   *
-   * @param height the board height
-   * @param width the board width
-   */
-  public void aiShots(int height, int width) {
-    boolean invalid;
-
-    for (int i = 0; i < count; i++) {
-      invalid = true;
-      while (invalid) {
-        int y = random.nextInt(height);
-        int x = random.nextInt(width);
-        Coord c = new Coord(x, y);
-
-        if (!aiGuessed.contains(c)) {
-          current.add(c);
-          aiGuessed.add(c);
-          invalid = false;
-        }
-      }
     }
-  }
-
+  }*/ // TODO: update for smarter ai for tournament
 
 }

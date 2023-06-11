@@ -21,7 +21,7 @@ import java.util.Scanner;
 /**
  * Class to handle player input for BattleSalvo game
  */
-public class OfflineController extends AbstractController{
+public class OfflineController extends AbstractController {
   private final Player p2;
   private final Scanner input;
   private final DependencyInjector di;
@@ -82,7 +82,6 @@ public class OfflineController extends AbstractController{
       List<Coord> shotsFiredFromP1 = ai.takeShots();
       di.clear();
       List<Coord> shotsFiredFromP2 = p2.takeShots();
-      //di.clear(); //TODO remove
 
       List<Coord> damageOnP1 = ai.reportDamage(shotsFiredFromP2);
       List<Coord> damageOnP2 = p2.reportDamage(shotsFiredFromP1);
@@ -225,14 +224,15 @@ public class OfflineController extends AbstractController{
   private boolean gameOver(List<Coord> list1, List<Coord> list2) {
     if (list1.size() == 0 && list2.size() == 0) {
       gameResult = DRAW;
+      view.printLine("Game ended in a draw");
       return true;
-    }
-    if (list1.size() == 0) {
-      gameResult = LOSE;
-      return true;
-    }
-    if (list2.size() == 0) {
+    } else if (list2.size() == 0) {
       gameResult = WIN;
+      view.printLine("You win slay");
+      return true;
+    } else if (list1.size() == 0) {
+      gameResult = LOSE;
+      view.printLine("You lose, not slay babe :(");
       return true;
     } else {
       return false;

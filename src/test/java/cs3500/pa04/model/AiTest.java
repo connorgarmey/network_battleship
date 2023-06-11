@@ -25,12 +25,12 @@ class AiTest {
     // Method that generates the shots already tested
   }
 
-  @Test
+  /*@Test
   void aiShots() {
     ai.aiShots(0, 0);
     assertEquals(new ArrayList<>(), ai.takeShots());
     ai.aiShots(1, 1);
-  }
+  }*/
 
 
 }

@@ -1,6 +1,9 @@
 package cs3500.pa04.view;
 
 
+/**
+ * Abstracted view class
+ */
 public abstract class AbstractView {
   protected final Appendable appendable;
 

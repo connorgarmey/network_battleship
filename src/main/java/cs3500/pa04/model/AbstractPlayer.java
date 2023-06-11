@@ -35,6 +35,17 @@ public abstract class AbstractPlayer implements Player {
     this.random = random;
   }
 
+  private List<Coord> makeAllGuesses() {
+    List<Coord> guesses = new ArrayList<>();
+    for (int i = 0; i < board.getBoardHeight(); i++) {
+      for (int j = 0; j < board.getBoardWidth(); j++) {
+        Coord addition = new Coord(j, i);
+        guesses.add(addition);
+      }
+    }
+    return guesses;
+  }
+
 
 
   /**
@@ -79,7 +90,7 @@ public abstract class AbstractPlayer implements Player {
       ships.add(tbd);
     }
     this.board.setBoards(ships);
-
+    this.allGuesses = makeAllGuesses();
     return ships;
   }
 

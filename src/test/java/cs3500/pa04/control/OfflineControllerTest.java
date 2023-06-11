@@ -59,7 +59,8 @@ class OfflineControllerTest {
         + "Remember, your fleet may not exceed size 6\n"
         + "--------------------------------------------------------------------------------\n"
         + "Please enter 4 shots\n"
-        + "_____________________\n", sb.toString());
+        + "_____________________\n"
+        + "You lose, not slay babe :(\n", sb.toString());
   }
 
   @Test
@@ -93,7 +94,8 @@ class OfflineControllerTest {
         + "Remember, your fleet may not exceed size 6\n"
         + "--------------------------------------------------------------------------------\n"
         + "Please enter 4 shots\n"
-        + "_____________________\n", sb.toString());
+        + "_____________________\n"
+        + "You lose, not slay babe :(\n", sb.toString());
   }
 
   @Test
@@ -200,6 +202,8 @@ class OfflineControllerTest {
         +
         "Please enter 8 shots\n"
         +
-        "_____________________\n", sb.toString());
+        "_____________________\n"
+        +
+        "You lose, not slay babe :(\n", sb.toString());
   }
 }

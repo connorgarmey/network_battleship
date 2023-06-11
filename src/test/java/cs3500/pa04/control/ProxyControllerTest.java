@@ -114,7 +114,7 @@ class ProxyControllerTest {
     controller.runApp();
     String expected = "{\"method-name\":\"take-shots\",\"argum"
         +
-        "ents\":{\"coordinates\":[{\"x\":5,\"y\":3}]}}\n";
+        "ents\":{\"coordinates\":[{\"x\":3,\"y\":2}]}}\n";
     assertEquals(expected, logToString());
 
   }

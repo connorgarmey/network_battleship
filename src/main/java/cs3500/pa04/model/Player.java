@@ -23,7 +23,7 @@ public interface Player {
    * @param height the height of the board, range: [6, 15] inclusive
    * @param width the width of the board, range: [6, 15] inclusive
    * @param specifications a map of ship type to the number of occurrences each ship should
-   * appear on the board
+   *     appear on the board
    * @return the placements of each ship on the board
    */
   List<Ship> setup(int height, int width, Map<ShipType, Integer> specifications);
@@ -43,7 +43,7 @@ public interface Player {
    *
    * @param opponentShotsOnBoard the opponent's shots on this player's board
    * @return a filtered list of the given shots that contain all locations of shots that hit a
-   * ship on this board
+   *     ship on this board
    */
   List<Coord> reportDamage(List<Coord> opponentShotsOnBoard);
 
@@ -58,6 +58,7 @@ public interface Player {
   /**
    * Notifies the player that the game is over.
    * Win, lose, and draw should all be supported
+   *
    * @param result if the player has won, lost, or forced a draw
    * @param reason the reason for the game ending
    */

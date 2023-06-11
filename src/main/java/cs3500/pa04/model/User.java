@@ -38,12 +38,4 @@ public class User extends AbstractPlayer {
     return shots;
   }
 
-  /**
-   * Updates the user's board with opponent shots
-   *
-   * @param opponentShotsOnBoard the shots the opponent took
-   */
-  public void updateUserBoard(List<Coord> opponentShotsOnBoard) {
-    board.updateUserBoard(opponentShotsOnBoard);
-  }
 }

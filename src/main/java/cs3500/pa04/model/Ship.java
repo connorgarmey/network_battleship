@@ -2,10 +2,6 @@ package cs3500.pa04.model;
 
 import static cs3500.pa04.model.Direction.HORIZONTAL;
 import static cs3500.pa04.model.Direction.VERTICAL;
-import static cs3500.pa04.model.ShipType.BATTLESHIP;
-import static cs3500.pa04.model.ShipType.CARRIER;
-import static cs3500.pa04.model.ShipType.DESTROYER;
-import static cs3500.pa04.model.ShipType.SUBMARINE;
 
 import cs3500.pa04.control.json.ShipJson;
 import java.util.ArrayList;
@@ -154,7 +150,7 @@ public class Ship {
   }
 
 
-  public ShipJson makeShipJSON() {
+  public ShipJson makeShipJson() {
     return new ShipJson(location.get(0).makeCoordJson(),
         shipType.getShipSize(), direction);
   }

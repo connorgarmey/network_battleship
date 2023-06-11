@@ -2,6 +2,9 @@ package cs3500.pa04.model;
 
 import java.util.List;
 
+/**
+ * Interactive interface for board
+ */
 public interface BoardInteractions extends BoardObserver {
 
   /**

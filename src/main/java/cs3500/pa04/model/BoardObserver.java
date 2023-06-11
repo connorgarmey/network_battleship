@@ -2,6 +2,9 @@ package cs3500.pa04.model;
 
 import java.util.List;
 
+/**
+ * Read only board interface
+ */
 public interface BoardObserver {
 
 

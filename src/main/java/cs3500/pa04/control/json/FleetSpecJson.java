@@ -10,6 +10,14 @@ import cs3500.pa04.model.ShipType;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Fleet specifications JSON
+ *
+ * @param numCarrier number of carriers
+ * @param numBattle number of battleships
+ * @param numDestroy number of destroyers
+ * @param numSub number of submarines
+ */
 public record FleetSpecJson(
     @JsonProperty("CARRIER")
     int numCarrier,
@@ -20,17 +28,20 @@ public record FleetSpecJson(
     @JsonProperty("SUBMARINE")
     int numSub) {
 
-    public Map<ShipType, Integer> makeMap() {
-        Map<ShipType, Integer> map = new HashMap<>();
-
-        map.put(CARRIER, this.numCarrier);
-        map.put(BATTLESHIP, this.numBattle);
-        map.put(DESTROYER, this.numDestroy);
-        map.put(SUBMARINE, this.numSub);
-
-        return map;
-    }
-
+  /**
+   * Makes a map of ships
+   *
+   * @return the map
+   */
+  public Map<ShipType, Integer> makeMap() {
+    Map<ShipType, Integer> map = new HashMap<>();
+    map.put(CARRIER, this.numCarrier);
+    map.put(BATTLESHIP, this.numBattle);
+    map.put(DESTROYER, this.numDestroy);
+    map.put(SUBMARINE, this.numSub);
+    return map;
+  }
 }
+
 
 

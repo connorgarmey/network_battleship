@@ -6,7 +6,7 @@ import cs3500.pa04.model.BoardObserver;
 /**
  * Class for user view
  */
-public class UserView extends AbstractView{
+public class UserView extends AbstractView {
   private final BoardObserver board;
 
   /**

@@ -1,7 +1,7 @@
 package cs3500.pa04;
 
-import cs3500.pa04.control.OfflineController;
 import cs3500.pa04.control.DependencyInjector;
+import cs3500.pa04.control.OfflineController;
 import cs3500.pa04.control.ProxyController;
 import cs3500.pa04.model.Ai;
 import cs3500.pa04.model.BoardImpl;
@@ -63,7 +63,7 @@ public class Driver {
       host = args[0];
       port = Integer.parseInt(args[1]);
       Socket server = new Socket(host, port);
-      ProxyController proxyController = new ProxyController(ai, serverView, server);
+      new ProxyController(ai, serverView, server);
     } catch (Exception e) {
       System.out.println("Invalid args");
     }

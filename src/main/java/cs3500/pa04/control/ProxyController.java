@@ -40,9 +40,10 @@ public class ProxyController extends AbstractController {
    * Constructor for a proxy controller
    *
    * @param ai the AI player
-   * @param v the
-   * @param server
-   * @throws IOException
+   * @param v the view
+   * @param server the socket
+   *
+   * @throws IOException invalid inputs
    */
   public ProxyController(Player ai, ServerView v, Socket server) throws IOException {
     super(ai);
@@ -54,6 +55,9 @@ public class ProxyController extends AbstractController {
   }
 
 
+  /**
+   * Method for running the server game
+   */
   public void runApp() {
     try {
       JsonParser parser = this.mapper.getFactory().createParser(this.in);
@@ -74,26 +78,26 @@ public class ProxyController extends AbstractController {
    *
    * @param message the message received from the server
    */
-    private void delegateMessage(MessageJson message) {
-      String methodName = message.methodName();
-      JsonNode arguments = message.arguments();
+  private void delegateMessage(MessageJson message) {
+    String methodName = message.methodName();
+    JsonNode arguments = message.arguments();
 
-      switch (methodName) {
-        case "join" -> handleJoin(arguments);
-        case "setup" -> handleSetup(arguments);
-        case "take-shots" -> handleShots(arguments);
-        case "report-damage" -> handleDamage(arguments);
-        case "successful-hits" -> handleHits(arguments);
-        case "end-game" -> handleEnd(arguments);
-        default -> throw new IllegalStateException("Bad JSON method name");
-      }
+    switch (methodName) {
+      case "join" -> handleJoin(arguments);
+      case "setup" -> handleSetup(arguments);
+      case "take-shots" -> handleShots(arguments);
+      case "report-damage" -> handleDamage(arguments);
+      case "successful-hits" -> handleHits(arguments);
+      case "end-game" -> handleEnd(arguments);
+      default -> throw new IllegalStateException("Bad JSON method name");
     }
+  }
 
-    private void sendResponse(JsonNode node, String methodName) {
-      MessageJson response = new MessageJson(methodName, node);
-      this.out.println(response);
-      view.printLine(response.toString());
-    }
+  private void sendResponse(JsonNode node, String methodName) {
+    MessageJson response = new MessageJson(methodName, node);
+    this.out.println(response);
+    view.printLine(response.toString());
+  }
 
 
   /**
@@ -123,7 +127,7 @@ public class ProxyController extends AbstractController {
         ai.setup(setupParams.height(), setupParams.width(), setupParams.fleet().makeMap());
 
     for (Ship s : ships) {
-      shipJsons.add(s.makeShipJSON());
+      shipJsons.add(s.makeShipJson());
     }
 
     FleetJson response = new FleetJson(shipJsons);
