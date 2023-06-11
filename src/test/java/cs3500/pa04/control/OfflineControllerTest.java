@@ -124,44 +124,82 @@ class OfflineControllerTest {
     OfflineController controller = new OfflineController(p1, view, p2, scan, di);
 
     controller.runApp();
-    assertEquals("Hello! Welcome to the OOD BattleSalvo Game! \n" +
-        "Please enter a valid height and width below:\n" +
-        "------------------------------------------------------\n" +
-        "\n" +
-        "Uh Oh! You've entered invalid dimensions. \n" +
-        "Please remember that the height and width\n" +
-        "of the game must be in the range (6, 15), inclusive. Try again!\n" +
-        "------------------------------------------------------\n" +
-        "\n" +
-        "Uh Oh! You've entered invalid dimensions. \n" +
-        "Please remember that the height and width\n" +
-        "of the game must be in the range (6, 15), inclusive. Try again!\n" +
-        "------------------------------------------------------\n" +
-        "\n" +
-        "Uh Oh! You've entered invalid dimensions. \n" +
-        "Please remember that the height and width\n" +
-        "of the game must be in the range (6, 15), inclusive. Try again!\n" +
-        "------------------------------------------------------\n" +
-        "\n" +
-        "Uh Oh! You've entered invalid dimensions. \n" +
-        "Please remember that the height and width\n" +
-        "of the game must be in the range (6, 15), inclusive. Try again!\n" +
-        "------------------------------------------------------\n" +
-        "\n" +
-        "Please enter your fleet in the order [Carrier, Battleship, Destroyer, Submarine].\n" +
-        "Remember, your fleet may not exceed size 8\n" +
-        "--------------------------------------------------------------------------------\n" +
-        "Uh Oh! You've entered invalid fleet sizes.\n" +
-        "Please enter your fleet in the order [Carrier, Battleship, Destroyer, Submarine].\n" +
-        "Remember, your fleet may not exceed size 8\n" +
-        "--------------------------------------------------------------------------------\n" +
-        "Please enter 8 shots\n" +
-        "_____________________\n" +
-        "Please enter valid and unique coordinates.\n" +
-        "Please enter valid and unique coordinates.\n" +
-        "Please enter valid and unique coordinates.\n" +
-        "Please enter valid and unique coordinates.\n" +
-        "Please enter 8 shots\n" +
+    assertEquals("Hello! Welcome to the OOD BattleSalvo Game! \n"
+        +
+        "Please enter a valid height and width below:\n"
+        +
+        "------------------------------------------------------\n"
+        +
+        "\n"
+        +
+        "Uh Oh! You've entered invalid dimensions. \n"
+        +
+        "Please remember that the height and width\n"
+        +
+        "of the game must be in the range (6, 15), inclusive. Try again!\n"
+        +
+        "------------------------------------------------------\n"
+        +
+        "\n"
+        +
+        "Uh Oh! You've entered invalid dimensions. \n"
+        +
+        "Please remember that the height and width\n"
+        +
+        "of the game must be in the range (6, 15), inclusive. Try again!\n"
+        +
+        "------------------------------------------------------\n"
+        +
+        "\n"
+        +
+        "Uh Oh! You've entered invalid dimensions. \n"
+        +
+        "Please remember that the height and width\n"
+        +
+        "of the game must be in the range (6, 15), inclusive. Try again!\n"
+        +
+        "------------------------------------------------------\n"
+        +
+        "\n"
+        +
+        "Uh Oh! You've entered invalid dimensions. \n"
+        +
+        "Please remember that the height and width\n"
+        +
+        "of the game must be in the range (6, 15), inclusive. Try again!\n"
+        +
+        "------------------------------------------------------\n"
+        +
+        "\n"
+        +
+        "Please enter your fleet in the order [Carrier, Battleship, Destroyer, Submarine].\n"
+        +
+        "Remember, your fleet may not exceed size 8\n"
+        +
+        "--------------------------------------------------------------------------------\n"
+        +
+        "Uh Oh! You've entered invalid fleet sizes.\n"
+        +
+        "Please enter your fleet in the order [Carrier, Battleship, Destroyer, Submarine].\n"
+        +
+        "Remember, your fleet may not exceed size 8\n"
+        +
+        "--------------------------------------------------------------------------------\n"
+        +
+        "Please enter 8 shots\n"
+        +
+        "_____________________\n"
+        +
+        "Please enter valid and unique coordinates.\n"
+        +
+        "Please enter valid and unique coordinates.\n"
+        +
+        "Please enter valid and unique coordinates.\n"
+        +
+        "Please enter valid and unique coordinates.\n"
+        +
+        "Please enter 8 shots\n"
+        +
         "_____________________\n", sb.toString());
   }
 }

@@ -1,19 +1,17 @@
 package cs3500.pa04.control;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cs3500.pa04.control.json.CoordJson;
 import cs3500.pa04.control.json.EndGameJson;
 import cs3500.pa04.control.json.FleetSpecJson;
-import cs3500.pa04.control.json.JoinJson;
-import cs3500.pa04.control.json.MessageJson;
 import cs3500.pa04.control.json.JsonUtils;
+import cs3500.pa04.control.json.MessageJson;
 import cs3500.pa04.control.json.SetupJson;
 import cs3500.pa04.control.json.VolleyJson;
-import cs3500.pa04.model.Ai;
 import cs3500.pa04.model.BoardImpl;
 import cs3500.pa04.model.BoardInteractions;
 import cs3500.pa04.model.GameResult;
@@ -26,7 +24,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -72,8 +69,8 @@ class ProxyControllerTest {
     }
 
     controller.runApp();
-    String expected = "{\"method-name\":\"join\",\"arguments\":{\"name\":\"connor" +
-        "garmey\",\"game-type\":\"SINGLE\"}}\n";
+    String expected = "{\"method-name\":\"join\",\"arguments\":{\"name\":\"connor"
+        + "garmey\",\"game-type\":\"SINGLE\"}}\n";
     assertEquals(expected, logToString());
   }
 
@@ -92,11 +89,11 @@ class ProxyControllerTest {
     }
 
     controller.runApp();
-    String expected = "{\"method-name\":\"setup\",\"arguments\":{\"fleet\":[{\"coo" +
-        "rd\":{\"x\":1,\"y\":1},\"length\":6,\"direction\":\"VERTICAL\"},{\"coo" +
-        "rd\":{\"x\":5,\"y\":2},\"length\":5,\"direction\":\"VERTICAL\"},{\"coo" +
-        "rd\":{\"x\":4,\"y\":0},\"length\":4,\"direction\":\"VERTICAL\"},{\"coo" +
-        "rd\":{\"x\":0,\"y\":0},\"length\":3,\"direction\":\"VERTICAL\"}]}}\n";
+    String expected = "{\"method-name\":\"setup\",\"arguments\":{\"fleet\":[{\"coo"
+        + "rd\":{\"x\":1,\"y\":1},\"length\":6,\"direction\":\"VERTICAL\"},{\"coo"
+        + "rd\":{\"x\":5,\"y\":2},\"length\":5,\"direction\":\"VERTICAL\"},{\"coo"
+        + "rd\":{\"x\":4,\"y\":0},\"length\":4,\"direction\":\"VERTICAL\"},{\"coo"
+        + "rd\":{\"x\":0,\"y\":0},\"length\":3,\"direction\":\"VERTICAL\"}]}}\n";
     assertEquals(expected, logToString());
   }
 
@@ -115,16 +112,18 @@ class ProxyControllerTest {
     }
 
     controller.runApp();
-    String expected = "{\"method-name\":\"take-shots\",\"arguments\":{\"coordinates\":[{\"x\":5,\"y\":3}]}}\n";
+    String expected = "{\"method-name\":\"take-shots\",\"argum"
+        +
+        "ents\":{\"coordinates\":[{\"x\":5,\"y\":3}]}}\n";
     assertEquals(expected, logToString());
 
   }
 
   @Test
   void testDamage() {
-    CoordJson coord1 = new CoordJson(1,1);
-    CoordJson coord2 = new CoordJson(0,0);
-    VolleyJson volley = new VolleyJson(new ArrayList<>(Arrays.asList(coord1,coord2)));
+    CoordJson coord1 = new CoordJson(1, 1);
+    CoordJson coord2 = new CoordJson(0, 0);
+    VolleyJson volley = new VolleyJson(new ArrayList<>(Arrays.asList(coord1, coord2)));
     JsonNode message = createSampleMessage("report-damage", volley);
 
     Mocket socket = new Mocket(this.testLog, List.of(message.toString()));
@@ -143,9 +142,9 @@ class ProxyControllerTest {
 
   @Test
   void testSuccess() {
-    CoordJson coord1 = new CoordJson(1,1);
-    CoordJson coord2 = new CoordJson(0,0);
-    VolleyJson volley = new VolleyJson(new ArrayList<>(Arrays.asList(coord1,coord2)));
+    CoordJson coord1 = new CoordJson(1, 1);
+    CoordJson coord2 = new CoordJson(0, 0);
+    VolleyJson volley = new VolleyJson(new ArrayList<>(Arrays.asList(coord1, coord2)));
     JsonNode message = createSampleMessage("successful-hits", volley);
 
     Mocket socket = new Mocket(this.testLog, List.of(message.toString()));
@@ -163,18 +162,18 @@ class ProxyControllerTest {
   }
 
 
-    @Test
-    void testEndLose() {
-      EndGameJson end = new EndGameJson(GameResult.LOSE,"You lose!");
-      JsonNode message = createSampleMessage("end-game", end);
+  @Test
+  void testEndLose() {
+    EndGameJson end = new EndGameJson(GameResult.LOSE, "You lose!");
+    JsonNode message = createSampleMessage("end-game", end);
 
-      Mocket socket = new Mocket(this.testLog, List.of(message.toString()));
+    Mocket socket = new Mocket(this.testLog, List.of(message.toString()));
 
-      try {
-        this.controller = new ProxyController(ai, view, socket);
-      } catch (IOException e) {
-        fail();
-      }
+    try {
+      this.controller = new ProxyController(ai, view, socket);
+    } catch (IOException e) {
+      fail();
+    }
 
 
     controller.runApp();
@@ -185,7 +184,7 @@ class ProxyControllerTest {
 
   @Test
   void testEndWin() {
-    EndGameJson end = new EndGameJson(GameResult.WIN,"You win!");
+    EndGameJson end = new EndGameJson(GameResult.WIN, "You win!");
     JsonNode message = createSampleMessage("end-game", end);
 
     Mocket socket = new Mocket(this.testLog, List.of(message.toString()));
@@ -205,7 +204,7 @@ class ProxyControllerTest {
 
   @Test
   void testEndTie() {
-    EndGameJson end = new EndGameJson(GameResult.DRAW,"All ships sunk!");
+    EndGameJson end = new EndGameJson(GameResult.DRAW, "All ships sunk!");
     JsonNode message = createSampleMessage("end-game", end);
 
     Mocket socket = new Mocket(this.testLog, List.of(message.toString()));
@@ -225,25 +224,16 @@ class ProxyControllerTest {
 
 
   private JsonNode createSampleMessage(String messageName, Record messageObject) {
-    MessageJson messageJson = new MessageJson(messageName, JsonUtils.serializeRecord(messageObject));
+    MessageJson messageJson = new MessageJson(messageName,
+        JsonUtils.serializeRecord(messageObject));
     return JsonUtils.serializeRecord(messageJson);
   }
 
-  private <T> void responseToClass(@SuppressWarnings("SameParameterValue") Class<T> classRef) {
-    try {
-      JsonParser jsonParser = new ObjectMapper().createParser(logToString());
-      jsonParser.readValueAs(classRef);
-      // No error thrown when parsing to a GuessJson, test passes!
-    } catch (IOException e) {
-      // Could not read
-      // -> exception thrown
-      // -> test fails since it must have been the wrong type of response.
-      fail();
-    }
-  }
+
 
   /**
    * Converts the ByteArrayOutputStream log to a string in UTF_8 format
+   *
    * @return String representing the current log buffer
    */
   private String logToString() {

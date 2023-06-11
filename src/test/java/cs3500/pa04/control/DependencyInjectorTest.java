@@ -2,15 +2,13 @@ package cs3500.pa04.control;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+import cs3500.pa04.model.BoardImplTest;
 import cs3500.pa04.model.Ship;
+import cs3500.pa04.model.ShipTest;
 import cs3500.pa04.view.UserView;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Scanner;
-import cs3500.pa04.control.DependencyInjector;
-import cs3500.pa04.model.BoardImplTest;
-import cs3500.pa04.model.ShipTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -59,15 +59,15 @@ public class ShipTest {
     ships = p1.setup(6, 6, map);
     ships2 = p1.setup(6, 6, map2);
     sub = ships.get(0);
-    coordJson = new CoordJson(1,4);
-    shipJson = new ShipJson(coordJson,3, HORIZONTAL);
+    coordJson = new CoordJson(1, 4);
+    shipJson = new ShipJson(coordJson, 3, HORIZONTAL);
 
 
   }
   
   @Test
   void testMakeShipJson() {
-    assertEquals(sub.makeShipJSON(),shipJson);
+    assertEquals(sub.makeShipJSON(), shipJson);
   }
 
   @Test

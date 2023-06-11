@@ -9,6 +9,9 @@ import java.io.StringWriter;
 import java.net.Socket;
 import java.util.List;
 
+/**
+ * Mock class for a Socket
+ */
 public class Mocket extends Socket {
 
   private final InputStream testInputs;
